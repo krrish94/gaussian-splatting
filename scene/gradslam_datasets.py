@@ -996,6 +996,19 @@ if __name__ == "__main__":
     from gradslam.structures.rgbdimages import RGBDImages
     from tqdm import trange
 
+    # # ICL
+    cfg = load_dataset_config("/home/krishna/code/gradslam-foundation/examples/dataconfigs/icl.yaml")
+    gradslam_pcd_out_path = "/home/krishna/code/gaussian-splatting/data/icl"
+    dataset = ICLDataset(
+        config_dict=cfg,
+        basedir="/home/krishna/data/icl",
+        sequence="living_room_traj1_frei_png",
+        start=0,
+        end=-1,
+        stride=30,
+        desired_height=240,
+        desired_width=320,
+    )
     # # Replica dataset
     # cfg = load_dataset_config("/home/krishna/code/gradslam-foundation/examples/dataconfigs/replica/replica.yaml")
     # gradslam_pcd_out_path = "/home/krishna/code/gaussian-splatting/data/concept-graphs/liam-lab-scan11"
@@ -1041,25 +1054,25 @@ if __name__ == "__main__":
     #     desired_width=160,
     #     # odomfile="odomfile_rtabmap.txt",
     # )
-    # # Record3D capture (Krishna BCS room -- for concept fields -- with seg)
-    cfg = load_dataset_config(
-        "/home/krishna/code/gaussian-splatting/data/krishna-bcs-office-longer-seq/dataconfig.yaml"
-    )
-    gradslam_pcd_out_path = "/home/krishna/code/gaussian-splatting/data/concept-fields/krishna-bcs-office-longer-seq"
-    ply_path = "data/concept-fields/krishna-bcs-office-longer-seq/splat_input_point_cloud.ply"
-    dataset_image_width = cfg["camera_params"]["image_width"]
-    dataset_image_height = cfg["camera_params"]["image_height"]
-    dataset = Record3DDataset(
-        config_dict=cfg,
-        basedir="/home/krishna/code/gaussian-splatting/data/",
-        sequence="krishna-bcs-office-longer-seq",
-        start=0,
-        end=-1,
-        stride=10,
-        desired_height=160,
-        desired_width=120,
-        # odomfile="odomfile_rtabmap.txt",
-    )
+    # # # Record3D capture (Krishna BCS room -- for concept fields -- with seg)
+    # cfg = load_dataset_config(
+    #     "/home/krishna/code/gaussian-splatting/data/krishna-bcs-office-longer-seq/dataconfig.yaml"
+    # )
+    # gradslam_pcd_out_path = "/home/krishna/code/gaussian-splatting/data/concept-fields/krishna-bcs-office-longer-seq"
+    # ply_path = "data/concept-fields/krishna-bcs-office-longer-seq/splat_input_point_cloud.ply"
+    # dataset_image_width = cfg["camera_params"]["image_width"]
+    # dataset_image_height = cfg["camera_params"]["image_height"]
+    # dataset = Record3DDataset(
+    #     config_dict=cfg,
+    #     basedir="/home/krishna/code/gaussian-splatting/data/",
+    #     sequence="krishna-bcs-office-longer-seq",
+    #     start=0,
+    #     end=-1,
+    #     stride=10,
+    #     desired_height=160,
+    #     desired_width=120,
+    #     # odomfile="odomfile_rtabmap.txt",
+    # )
 
     device = torch.device("cuda:0")
 

@@ -321,11 +321,28 @@ def read_gradslam_dataset():
 
     from .gradslam_datasets import (
         AzureKinectDataset,
+        ICLDataset,
         Record3DDataset,
         ReplicaDataset,
         load_dataset_config,
     )
 
+    # # ICL
+    cfg = load_dataset_config("/home/krishna/code/gradslam-foundation/examples/dataconfigs/icl.yaml")
+    ply_path = "data/icl/splat_input_point_cloud.ply"
+    gradslam_pcd_out_path = "/home/krishna/code/gaussian-splatting/data/icl"
+    dataset_image_width = cfg["camera_params"]["image_width"]
+    dataset_image_height = cfg["camera_params"]["image_height"]
+    dataset = ICLDataset(
+        config_dict=cfg,
+        basedir="/home/krishna/data/icl",
+        sequence="living_room_traj1_frei_png",
+        start=0,
+        end=-1,
+        stride=30,
+        desired_height=dataset_image_height,
+        desired_width=dataset_image_width,
+    )
     # # # Replica scene
     # cfg = load_dataset_config("/home/krishna/code/gradslam-foundation/examples/dataconfigs/replica/replica.yaml")
     # ply_path = "data/replica/room0/splat_input_point_cloud.ply"
@@ -376,25 +393,25 @@ def read_gradslam_dataset():
     #     desired_width=dataset_image_width,
     #     # odomfile="odomfile_rtabmap.txt",
     # )
-    # # Record3D capture (Krishna BCS room -- for concept fields -- with seg)
-    cfg = load_dataset_config(
-        "/home/krishna/code/gaussian-splatting/data/krishna-bcs-office-longer-seq/dataconfig.yaml"
-    )
-    gradslam_pcd_out_path = "/home/krishna/code/gaussian-splatting/data/concept-fields/krishna-bcs-office-longer-seq"
-    ply_path = "data/concept-fields/krishna-bcs-office-longer-seq/splat_input_point_cloud.ply"
-    dataset_image_width = cfg["camera_params"]["image_width"]
-    dataset_image_height = cfg["camera_params"]["image_height"]
-    dataset = Record3DDataset(
-        config_dict=cfg,
-        basedir="/home/krishna/code/gaussian-splatting/data/",
-        sequence="krishna-bcs-office-longer-seq",
-        start=0,
-        end=-1,
-        stride=10,
-        desired_height=dataset_image_height,
-        desired_width=dataset_image_width,
-        # odomfile="odomfile_rtabmap.txt",
-    )
+    # # # Record3D capture (Krishna BCS room -- for concept fields -- with seg)
+    # cfg = load_dataset_config(
+    #     "/home/krishna/code/gaussian-splatting/data/krishna-bcs-office-longer-seq/dataconfig.yaml"
+    # )
+    # gradslam_pcd_out_path = "/home/krishna/code/gaussian-splatting/data/concept-fields/krishna-bcs-office-longer-seq"
+    # ply_path = "data/concept-fields/krishna-bcs-office-longer-seq/splat_input_point_cloud.ply"
+    # dataset_image_width = cfg["camera_params"]["image_width"]
+    # dataset_image_height = cfg["camera_params"]["image_height"]
+    # dataset = Record3DDataset(
+    #     config_dict=cfg,
+    #     basedir="/home/krishna/code/gaussian-splatting/data/",
+    #     sequence="krishna-bcs-office-longer-seq",
+    #     start=0,
+    #     end=-1,
+    #     stride=10,
+    #     desired_height=dataset_image_height,
+    #     desired_width=dataset_image_width,
+    #     # odomfile="odomfile_rtabmap.txt",
+    # )
 
     # Replicate the readColmapCameras steps here, accounting for the gradslam dataset format
     cam_infos_unsorted = []
