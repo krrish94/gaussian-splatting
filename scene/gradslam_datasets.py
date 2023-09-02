@@ -148,6 +148,7 @@ class GradSLAMDataset(torch.utils.data.Dataset):
 
         self.start = start
         self.end = end
+        self.stride = stride
         if start < 0:
             raise ValueError("start must be positive. Got {0}.".format(stride))
         if not (end == -1 or end > start):
@@ -805,7 +806,7 @@ class Record3DDataset(GradSLAMDataset):
         seg_paths = None
         if self.load_seg:
             self.seg_paths = natsorted(glob.glob(os.path.join(self.input_folder, "seg", "*.png")))
-            self.seg_paths = self.seg_paths[self.start : self.end : stride]
+            self.seg_paths = self.seg_paths[self.start : self.end : self.stride]
         return color_paths, depth_paths, embedding_paths
 
     def load_poses(self):
@@ -865,7 +866,7 @@ class Record3DDataset(GradSLAMDataset):
         if self.load_seg:
             seg_path = self.seg_paths[index]
             seg = np.asarray(imageio.imread(seg_path), dtype=np.int64)
-            seg = torch.from_numpy(seg)
+            seg = torch.from_numpy(seg).long()
             return (
                 color.to(self.device).type(self.dtype),
                 depth.to(self.device).type(self.dtype),
@@ -1058,6 +1059,7 @@ if __name__ == "__main__":
         stride=10,
         desired_height=160,
         desired_width=120,
+        load_seg=True,
         # odomfile="odomfile_rtabmap.txt",
     )
 
@@ -1066,7 +1068,7 @@ if __name__ == "__main__":
     colors, depths, poses = [], [], []
     intrinsics = None
     for idx in range(len(dataset)):
-        _color, _depth, intrinsics, _pose = dataset[idx]
+        _color, _depth, intrinsics, _pose, _seg = dataset[idx]
         colors.append(_color)
         depths.append(_depth)
         poses.append(_pose)

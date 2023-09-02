@@ -13,7 +13,7 @@ import json
 import os
 import sys
 from pathlib import Path
-from typing import NamedTuple
+from typing import NamedTuple, Optional
 
 import numpy as np
 from PIL import Image
@@ -48,6 +48,7 @@ class CameraInfo(NamedTuple):
     fy: float
     cx: float
     cy: float
+    seg: Optional[np.array] = None
 
 
 class SceneInfo(NamedTuple):
@@ -377,6 +378,7 @@ def read_gradslam_dataset():
     #     # odomfile="odomfile_rtabmap.txt",
     # )
     # # Record3D capture (Krishna BCS room -- for concept fields -- with seg)
+    load_seg = True
     cfg = load_dataset_config(
         "/home/krishna/code/gaussian-splatting/data/krishna-bcs-office-longer-seq/dataconfig.yaml"
     )
@@ -393,6 +395,7 @@ def read_gradslam_dataset():
         stride=10,
         desired_height=dataset_image_height,
         desired_width=dataset_image_width,
+        load_seg=load_seg,
         # odomfile="odomfile_rtabmap.txt",
     )
 
@@ -404,7 +407,7 @@ def read_gradslam_dataset():
     fovx = focal2fov(cfg["camera_params"]["fx"], dataset_image_width)
 
     for idx in range(len(dataset)):
-        _, _, _, pose, *_ = dataset[idx]
+        _, _, _, pose, seg = dataset[idx]
         image_path = dataset.color_paths[idx]
         # print(image_path)
         image = Image.open(image_path)
@@ -430,6 +433,7 @@ def read_gradslam_dataset():
             fy=cfg["camera_params"]["fy"],
             cx=cfg["camera_params"]["cx"],
             cy=cfg["camera_params"]["cy"],
+            seg=seg.detach().cpu().numpy(),
         )
         cam_infos_unsorted.append(cam_info)
 

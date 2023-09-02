@@ -130,6 +130,8 @@ def training(dataset, opt, pipe, testing_iterations, saving_iterations, checkpoi
         # )
         # image = shifted_image[0, ...]
 
+        gt_seg = viewpoint_cam.seg.cuda()
+
         # Loss
         gt_image = viewpoint_cam.original_image.cuda()
         Ll1 = l1_loss(image, gt_image)

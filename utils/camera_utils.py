@@ -67,6 +67,7 @@ def loadCam(args, id, cam_info, resolution_scale):
         fy=cam_info.fy,
         cx=cam_info.cx,
         cy=cam_info.cy,
+        seg=cam_info.seg,
     )
 
 

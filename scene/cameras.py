@@ -39,6 +39,7 @@ class Camera(nn.Module):
         fy=None,
         cx=None,
         cy=None,
+        seg=None,
     ):
         super(Camera, self).__init__()
 
@@ -101,6 +102,9 @@ class Camera(nn.Module):
         # Addition by Krishna, to account for non-centered principal points
         self.cx = cx
         self.cy = cy
+
+        # Addition by Krishna, to account for semantic segmentation supervision
+        self.seg = torch.from_numpy(seg).to(self.data_device).long()
 
 
 class MiniCam:
