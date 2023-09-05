@@ -20,6 +20,7 @@ def main():
     outdir_depth = os.path.join(outdir, "depth")
     outdir_poses = os.path.join(outdir, "poses")
     outdir_seg = os.path.join(outdir, "seg")
+    outdir_ply = os.path.join(outdir, "ply")
     Path(outdir_rgb).mkdir(parents=True, exist_ok=True)
     Path(outdir_depth).mkdir(parents=True, exist_ok=True)
     Path(outdir_poses).mkdir(parents=True, exist_ok=True)

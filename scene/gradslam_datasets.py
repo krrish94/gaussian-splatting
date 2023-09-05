@@ -777,6 +777,7 @@ class Record3DDataset(GradSLAMDataset):
     ):
         self.input_folder = os.path.join(basedir, sequence)
         self.pose_path = os.path.join(self.input_folder, "poses")
+        self.load_seg = load_seg
         if load_seg:
             self.seg_path = os.path.join(self.input_folder, "seg")
             self.load_seg = True
@@ -996,32 +997,32 @@ if __name__ == "__main__":
     from gradslam.structures.rgbdimages import RGBDImages
     from tqdm import trange
 
-    # # ICL
-    cfg = load_dataset_config("/home/krishna/code/gradslam-foundation/examples/dataconfigs/icl.yaml")
-    gradslam_pcd_out_path = "/home/krishna/code/gaussian-splatting/data/icl"
-    dataset = ICLDataset(
-        config_dict=cfg,
-        basedir="/home/krishna/data/icl",
-        sequence="living_room_traj1_frei_png",
-        start=0,
-        end=-1,
-        stride=30,
-        desired_height=240,
-        desired_width=320,
-    )
-    # # Replica dataset
-    # cfg = load_dataset_config("/home/krishna/code/gradslam-foundation/examples/dataconfigs/replica/replica.yaml")
-    # gradslam_pcd_out_path = "/home/krishna/code/gaussian-splatting/data/concept-graphs/liam-lab-scan11"
-    # dataset = ReplicaDataset(
+    # # # ICL
+    # cfg = load_dataset_config("/home/krishna/code/gradslam-foundation/examples/dataconfigs/icl.yaml")
+    # gradslam_pcd_out_path = "/home/krishna/code/gaussian-splatting/data/icl"
+    # dataset = ICLDataset(
     #     config_dict=cfg,
-    #     basedir="/home/krishna/data/nice-slam-data/Replica",
-    #     sequence="room0",
+    #     basedir="/home/krishna/data/icl",
+    #     sequence="living_room_traj1_frei_png",
     #     start=0,
     #     end=-1,
-    #     stride=10,
+    #     stride=30,
     #     desired_height=240,
     #     desired_width=320,
     # )
+    # Replica dataset
+    cfg = load_dataset_config("/home/krishna/code/gradslam-foundation/examples/dataconfigs/replica/replica.yaml")
+    gradslam_pcd_out_path = "/home/krishna/code/gaussian-splatting/data/concept-graphs/liam-lab-scan11"
+    dataset = ReplicaDataset(
+        config_dict=cfg,
+        basedir="/home/krishna/data/nice-slam-data/Replica",
+        sequence="room0",
+        start=0,
+        end=-1,
+        stride=10,
+        desired_height=240,
+        desired_width=320,
+    )
     # # # Azure Kinect (Ali UdeM lab scan 11)
     # cfg = load_dataset_config("/home/krishna/code/gradslam-foundation/examples/dataconfigs/azure/ali-udem.yaml")
     # gradslam_pcd_out_path = "/home/krishna/code/gaussian-splatting/data/concept-graphs/liam-lab-scan11"

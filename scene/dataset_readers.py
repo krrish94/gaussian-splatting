@@ -327,38 +327,38 @@ def read_gradslam_dataset():
         load_dataset_config,
     )
 
-    # # ICL
-    cfg = load_dataset_config("/home/krishna/code/gradslam-foundation/examples/dataconfigs/icl.yaml")
-    ply_path = "data/icl/splat_input_point_cloud.ply"
-    gradslam_pcd_out_path = "/home/krishna/code/gaussian-splatting/data/icl"
-    dataset_image_width = cfg["camera_params"]["image_width"]
-    dataset_image_height = cfg["camera_params"]["image_height"]
-    dataset = ICLDataset(
-        config_dict=cfg,
-        basedir="/home/krishna/data/icl",
-        sequence="living_room_traj1_frei_png",
-        start=0,
-        end=-1,
-        stride=30,
-        desired_height=dataset_image_height,
-        desired_width=dataset_image_width,
-    )
-    # # # Replica scene
-    # cfg = load_dataset_config("/home/krishna/code/gradslam-foundation/examples/dataconfigs/replica/replica.yaml")
-    # ply_path = "data/replica/room0/splat_input_point_cloud.ply"
-    # gradslam_pcd_out_path = "data/replica/room0"
+    # # # ICL
+    # cfg = load_dataset_config("/home/krishna/code/gradslam-foundation/examples/dataconfigs/icl.yaml")
+    # ply_path = "data/icl/splat_input_point_cloud.ply"
+    # gradslam_pcd_out_path = "/home/krishna/code/gaussian-splatting/data/icl"
     # dataset_image_width = cfg["camera_params"]["image_width"]
     # dataset_image_height = cfg["camera_params"]["image_height"]
-    # dataset = ReplicaDataset(
+    # dataset = ICLDataset(
     #     config_dict=cfg,
-    #     basedir="/home/krishna/data/nice-slam-data/Replica",
-    #     sequence="room0",
+    #     basedir="/home/krishna/data/icl",
+    #     sequence="living_room_traj1_frei_png",
     #     start=0,
     #     end=-1,
-    #     stride=20,
+    #     stride=30,
     #     desired_height=dataset_image_height,
     #     desired_width=dataset_image_width,
     # )
+    # # Replica scene
+    cfg = load_dataset_config("/home/krishna/code/gradslam-foundation/examples/dataconfigs/replica/replica.yaml")
+    ply_path = "data/replica/room0/splat_input_point_cloud.ply"
+    gradslam_pcd_out_path = "data/replica/room0"
+    dataset_image_width = cfg["camera_params"]["image_width"]
+    dataset_image_height = cfg["camera_params"]["image_height"]
+    dataset = ReplicaDataset(
+        config_dict=cfg,
+        basedir="/home/krishna/data/nice-slam-data/Replica",
+        sequence="room0",
+        start=0,
+        end=200,
+        stride=100,
+        desired_height=dataset_image_height,
+        desired_width=dataset_image_width,
+    )
     # # # Azure Kinect capture (Liam lab scan 11)
     # ply_path = "data/concept-graphs/liam-lab-scan11/splat_input_point_cloud.ply"
     # cfg = load_dataset_config("/home/krishna/code/gradslam-foundation/examples/dataconfigs/azure/ali-udem.yaml")
